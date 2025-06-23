@@ -325,10 +325,11 @@ How may I assist you with planning your next extraordinary journey?`;
 }
 
 // Initialize Stripe
-if (!process.env.STRIPE_SECRET_KEY) {
-  throw new Error('Missing required Stripe secret: STRIPE_SECRET_KEY');
+const stripeSecretKey = process.env.STRIPE_SECRET_KEY;
+if (!stripeSecretKey) {
+  console.warn('STRIPE_SECRET_KEY not found, Stripe functionality will be disabled');
 }
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+const stripe = stripeSecretKey ? new Stripe(stripeSecretKey) : null;
 
 // Validation schemas
 const createBookingSchema = insertBookingSchema.extend({
@@ -1104,6 +1105,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Stripe payment routes
   app.post("/api/create-payment-intent", async (req: any, res) => {
     try {
+      if (!stripe) {
+        return res.status(503).json({ message: "Payment processing is currently unavailable" });
+      }
+
       const sessionUser = req.session?.user;
       const replitUser = req.user?.claims?.sub;
       const userId = sessionUser?.id || replitUser;
@@ -1151,6 +1156,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/confirm-payment", async (req: any, res) => {
     try {
+      if (!stripe) {
+        return res.status(503).json({ message: "Payment processing is currently unavailable" });
+      }
+
       const sessionUser = req.session?.user;
       const replitUser = req.user?.claims?.sub;
       const userId = sessionUser?.id || replitUser;
