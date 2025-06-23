@@ -893,6 +893,13 @@ export default function EnhancedBooking() {
     }
     
     const perPersonCostUSD = basePrice + perPersonFees;
+    console.log('Debug calculatePerPersonCost:', { 
+      basePrice, 
+      perPersonFees, 
+      perPersonCostUSD, 
+      destinationName: destination?.name,
+      convertedPrice: convertPrice(perPersonCostUSD)
+    });
     return convertPrice(perPersonCostUSD);
   };
 
