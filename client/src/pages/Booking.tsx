@@ -167,16 +167,16 @@ export default function Booking() {
     return total + (upgrade?.price || 0);
   }, 0);
   
-  // Add destination-specific fees
+  // Add destination-specific fees (per person)
   let destinationFees = 0;
   if (destination.name.toLowerCase().includes('maldives')) {
-    destinationFees += 25; // Marine conservation fee
+    destinationFees += 25 * parseInt(guests); // Marine conservation fee per person
   } else if (destination.name.toLowerCase().includes('tokyo')) {
-    destinationFees += 15; // Tourist tax
+    destinationFees += 15 * parseInt(guests); // Tourist tax per person
   } else if (destination.name.toLowerCase().includes('safari') || destination.name.toLowerCase().includes('kenya')) {
-    destinationFees += 50; // Conservation levy
+    destinationFees += 50 * parseInt(guests); // Conservation levy per person
   } else if (destination.name.toLowerCase().includes('santorini')) {
-    destinationFees += 20; // Tourism tax
+    destinationFees += 20 * parseInt(guests); // Tourism tax per person
   }
   
   const subtotal = Math.round((basePrice * classMultiplier) + upgradeTotal + destinationFees);
@@ -538,29 +538,29 @@ export default function Booking() {
                     {/* Destination-specific fees (chargeable) */}
                     {destination.name.toLowerCase().includes('maldives') && (
                       <div className="flex justify-between text-sm">
-                        <span>Marine conservation fee</span>
-                        <span>+$25</span>
+                        <span>Marine conservation fee × {guests} guest{guests !== "1" ? 's' : ''}</span>
+                        <span>+${(25 * parseInt(guests)).toLocaleString()}</span>
                       </div>
                     )}
                     
                     {destination.name.toLowerCase().includes('tokyo') && (
                       <div className="flex justify-between text-sm">
-                        <span>Tourist tax</span>
-                        <span>+$15</span>
+                        <span>Tourist tax × {guests} guest{guests !== "1" ? 's' : ''}</span>
+                        <span>+${(15 * parseInt(guests)).toLocaleString()}</span>
                       </div>
                     )}
                     
                     {(destination.name.toLowerCase().includes('safari') || destination.name.toLowerCase().includes('kenya')) && (
                       <div className="flex justify-between text-sm">
-                        <span>Conservation levy</span>
-                        <span>+$50</span>
+                        <span>Conservation levy × {guests} guest{guests !== "1" ? 's' : ''}</span>
+                        <span>+${(50 * parseInt(guests)).toLocaleString()}</span>
                       </div>
                     )}
                     
                     {destination.name.toLowerCase().includes('santorini') && (
                       <div className="flex justify-between text-sm">
-                        <span>Tourism tax</span>
-                        <span>+$20</span>
+                        <span>Tourism tax × {guests} guest{guests !== "1" ? 's' : ''}</span>
+                        <span>+${(20 * parseInt(guests)).toLocaleString()}</span>
                       </div>
                     )}
                     

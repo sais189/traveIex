@@ -885,16 +885,16 @@ export default function EnhancedBooking() {
       return total + (upgrade?.price || 0);
     }, 0);
     
-    // Add destination-specific fees
+    // Add destination-specific fees (per person)
     let destinationFees = 0;
     if (destination?.name.toLowerCase().includes('maldives')) {
-      destinationFees += 25; // Marine conservation fee
+      destinationFees += 25 * guests; // Marine conservation fee per person
     } else if (destination?.name.toLowerCase().includes('tokyo')) {
-      destinationFees += 15; // Tourist tax
+      destinationFees += 15 * guests; // Tourist tax per person
     } else if (destination?.name.toLowerCase().includes('safari') || destination?.name.toLowerCase().includes('kenya') || destination?.name.toLowerCase().includes('serengeti')) {
-      destinationFees += 50; // Conservation levy
+      destinationFees += 50 * guests; // Conservation levy per person
     } else if (destination?.name.toLowerCase().includes('santorini')) {
-      destinationFees += 20; // Tourism tax
+      destinationFees += 20 * guests; // Tourism tax per person
     }
     
     const subtotalUSD = (basePrice * guests) + classPrice + upgradesTotal + destinationFees;
@@ -1453,29 +1453,29 @@ export default function EnhancedBooking() {
                     {/* Destination-specific fees (chargeable) */}
                     {destination?.name.toLowerCase().includes('maldives') && (
                       <div className="flex justify-between text-sm mb-3">
-                        <span>Marine conservation fee</span>
-                        <span>+{formatPrice(25)}</span>
+                        <span>Marine conservation fee × {guests} guest{guests > 1 ? 's' : ''}</span>
+                        <span>+{formatPrice(25 * guests)}</span>
                       </div>
                     )}
                     
                     {destination?.name.toLowerCase().includes('tokyo') && (
                       <div className="flex justify-between text-sm mb-3">
-                        <span>Tourist tax</span>
-                        <span>+{formatPrice(15)}</span>
+                        <span>Tourist tax × {guests} guest{guests > 1 ? 's' : ''}</span>
+                        <span>+{formatPrice(15 * guests)}</span>
                       </div>
                     )}
                     
                     {(destination?.name.toLowerCase().includes('safari') || destination?.name.toLowerCase().includes('kenya') || destination?.name.toLowerCase().includes('serengeti')) && (
                       <div className="flex justify-between text-sm mb-3">
-                        <span>Conservation levy</span>
-                        <span>+{formatPrice(50)}</span>
+                        <span>Conservation levy × {guests} guest{guests > 1 ? 's' : ''}</span>
+                        <span>+{formatPrice(50 * guests)}</span>
                       </div>
                     )}
                     
                     {destination?.name.toLowerCase().includes('santorini') && (
                       <div className="flex justify-between text-sm mb-3">
-                        <span>Tourism tax</span>
-                        <span>+{formatPrice(20)}</span>
+                        <span>Tourism tax × {guests} guest{guests > 1 ? 's' : ''}</span>
+                        <span>+{formatPrice(20 * guests)}</span>
                       </div>
                     )}
                     
