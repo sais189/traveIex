@@ -1450,7 +1450,36 @@ export default function EnhancedBooking() {
                       ) : null;
                     })}
                     
-                    {/* Destination-specific inclusions and fees */}
+                    {/* Destination-specific fees (chargeable) */}
+                    {destination?.name.toLowerCase().includes('maldives') && (
+                      <div className="flex justify-between text-sm mb-3">
+                        <span>Marine conservation fee</span>
+                        <span>+{formatPrice(25)}</span>
+                      </div>
+                    )}
+                    
+                    {destination?.name.toLowerCase().includes('tokyo') && (
+                      <div className="flex justify-between text-sm mb-3">
+                        <span>Tourist tax</span>
+                        <span>+{formatPrice(15)}</span>
+                      </div>
+                    )}
+                    
+                    {(destination?.name.toLowerCase().includes('safari') || destination?.name.toLowerCase().includes('kenya') || destination?.name.toLowerCase().includes('serengeti')) && (
+                      <div className="flex justify-between text-sm mb-3">
+                        <span>Conservation levy</span>
+                        <span>+{formatPrice(50)}</span>
+                      </div>
+                    )}
+                    
+                    {destination?.name.toLowerCase().includes('santorini') && (
+                      <div className="flex justify-between text-sm mb-3">
+                        <span>Tourism tax</span>
+                        <span>+{formatPrice(20)}</span>
+                      </div>
+                    )}
+                    
+                    {/* Destination-specific inclusions (free) */}
                     {destination?.name.toLowerCase().includes('maldives') && (
                       <>
                         <div className="flex justify-between text-sm text-muted-foreground mb-2">
@@ -1460,10 +1489,6 @@ export default function EnhancedBooking() {
                         <div className="flex justify-between text-sm text-muted-foreground mb-2">
                           <span>Overwater villa access</span>
                           <span>Included</span>
-                        </div>
-                        <div className="flex justify-between text-sm text-muted-foreground mb-2">
-                          <span>Marine conservation fee</span>
-                          <span>{formatPrice(25)}</span>
                         </div>
                         <div className="flex justify-between text-sm text-muted-foreground mb-2">
                           <span>Diving equipment rental</span>
@@ -1483,10 +1508,6 @@ export default function EnhancedBooking() {
                           <span>Included</span>
                         </div>
                         <div className="flex justify-between text-sm text-muted-foreground mb-2">
-                          <span>Tourist tax</span>
-                          <span>{formatPrice(15)}</span>
-                        </div>
-                        <div className="flex justify-between text-sm text-muted-foreground mb-2">
                           <span>Temple entrance fees</span>
                           <span>Included</span>
                         </div>
@@ -1495,21 +1516,17 @@ export default function EnhancedBooking() {
                     
                     {(destination?.name.toLowerCase().includes('safari') || destination?.name.toLowerCase().includes('kenya') || destination?.name.toLowerCase().includes('serengeti')) && (
                       <>
-                        <div className="flex justify-between text-sm text-muted-foreground">
+                        <div className="flex justify-between text-sm text-muted-foreground mb-2">
                           <span>Game drive vehicle</span>
                           <span>Included</span>
                         </div>
-                        <div className="flex justify-between text-sm text-muted-foreground">
+                        <div className="flex justify-between text-sm text-muted-foreground mb-2">
                           <span>Professional guide</span>
                           <span>Included</span>
                         </div>
-                        <div className="flex justify-between text-sm text-muted-foreground">
+                        <div className="flex justify-between text-sm text-muted-foreground mb-2">
                           <span>Park entrance fees</span>
                           <span>Included</span>
-                        </div>
-                        <div className="flex justify-between text-sm text-muted-foreground">
-                          <span>Conservation levy</span>
-                          <span>{formatPrice(50)}</span>
                         </div>
                       </>
                     )}
@@ -1545,10 +1562,7 @@ export default function EnhancedBooking() {
                           <span>Wine tasting tours</span>
                           <span>Included</span>
                         </div>
-                        <div className="flex justify-between text-sm text-muted-foreground">
-                          <span>Tourism tax</span>
-                          <span>{formatPrice(20)}</span>
-                        </div>
+
                       </>
                     )}
                     

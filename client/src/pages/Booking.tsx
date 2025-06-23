@@ -535,31 +535,48 @@ export default function Booking() {
                       ) : null;
                     })}
                     
-                    {/* Destination-specific inclusions and fees */}
+                    {/* Destination-specific fees (chargeable) */}
                     {destination.name.toLowerCase().includes('maldives') && (
-                      <>
-                        <div className="flex justify-between text-sm text-muted-foreground">
-                          <span>Seaplane transfers</span>
-                          <span>Included</span>
-                        </div>
-                        <div className="flex justify-between text-sm text-muted-foreground">
-                          <span>Marine conservation fee</span>
-                          <span>$25</span>
-                        </div>
-                      </>
+                      <div className="flex justify-between text-sm">
+                        <span>Marine conservation fee</span>
+                        <span>+$25</span>
+                      </div>
                     )}
                     
                     {destination.name.toLowerCase().includes('tokyo') && (
-                      <>
-                        <div className="flex justify-between text-sm text-muted-foreground">
-                          <span>JR Pass (7 days)</span>
-                          <span>Included</span>
-                        </div>
-                        <div className="flex justify-between text-sm text-muted-foreground">
-                          <span>Tourist tax</span>
-                          <span>$15</span>
-                        </div>
-                      </>
+                      <div className="flex justify-between text-sm">
+                        <span>Tourist tax</span>
+                        <span>+$15</span>
+                      </div>
+                    )}
+                    
+                    {(destination.name.toLowerCase().includes('safari') || destination.name.toLowerCase().includes('kenya')) && (
+                      <div className="flex justify-between text-sm">
+                        <span>Conservation levy</span>
+                        <span>+$50</span>
+                      </div>
+                    )}
+                    
+                    {destination.name.toLowerCase().includes('santorini') && (
+                      <div className="flex justify-between text-sm">
+                        <span>Tourism tax</span>
+                        <span>+$20</span>
+                      </div>
+                    )}
+                    
+                    {/* Destination-specific inclusions (free) */}
+                    {destination.name.toLowerCase().includes('maldives') && (
+                      <div className="flex justify-between text-sm text-muted-foreground">
+                        <span>Seaplane transfers</span>
+                        <span>Included</span>
+                      </div>
+                    )}
+                    
+                    {destination.name.toLowerCase().includes('tokyo') && (
+                      <div className="flex justify-between text-sm text-muted-foreground">
+                        <span>JR Pass (7 days)</span>
+                        <span>Included</span>
+                      </div>
                     )}
                     
                     {(destination.name.toLowerCase().includes('safari') || destination.name.toLowerCase().includes('kenya')) && (
