@@ -512,7 +512,7 @@ export default function Booking() {
                     
                     {/* Base Price */}
                     <div className="flex justify-between text-sm">
-                      <span>Base price × {guests} guest{guests !== "1" ? 's' : ''}</span>
+                      <span>Base price (${parseFloat(destination.price).toLocaleString()} × {guests} guest{guests !== "1" ? 's' : ''})</span>
                       <span>${(parseFloat(destination.price) * parseInt(guests)).toLocaleString()}</span>
                     </div>
                     

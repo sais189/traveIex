@@ -192,7 +192,7 @@ For production deployments, you can use:
 - June 16, 2025. Removed all Replit-specific dependencies and domains, implemented local authentication system, enabled local hosting
 - June 19, 2025. Connected to user's personal PostgreSQL database on Render, database configured and empty
 - June 23, 2025. Enhanced UI with dropdown calendar components, implemented comprehensive date validation with toast notifications, set Australian Dollar as default currency, updated destination popularity rankings
-- June 23, 2025. Fixed pricing calculation mismatch - destination-specific fees now properly included in subtotal calculations, ensuring total amount is always equal to or less than subtotal
+- June 23, 2025. Fixed pricing calculation mismatch - destination-specific fees now properly included in subtotal calculations, ensuring total amount is always equal to or less than subtotal. Updated currency display to show base prices in user's preferred currency throughout application for consistency
 
 ## User Preferences
 

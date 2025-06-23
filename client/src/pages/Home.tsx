@@ -10,6 +10,7 @@ import { Calendar as CalendarComponent } from "@/components/ui/calendar";
 import { OptimizedImage } from "@/components/ui/optimized-image";
 import EarthGlobe from "@/components/EarthGlobe";
 import PricingBadge from "@/components/PricingBadge";
+import { useCurrency } from "@/components/CurrencyProvider";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import type { Destination } from "@shared/schema";
@@ -23,6 +24,7 @@ export default function Home() {
   const [searchQuery, setSearchQuery] = useState("");
   const [datePickerOpen, setDatePickerOpen] = useState(false);
   const searchRef = useRef<HTMLDivElement>(null);
+  const { formatPrice } = useCurrency();
 
   const { data: destinations = [] } = useQuery<Destination[]>({
     queryKey: ["/api/destinations"],
@@ -363,15 +365,15 @@ export default function Home() {
                         {destination.originalPrice && parseFloat(destination.originalPrice) > parseFloat(destination.price) ? (
                           <div className="flex flex-col">
                             <span className="text-xs text-muted-foreground line-through">
-                              ${parseFloat(destination.originalPrice).toLocaleString()}
+                              {formatPrice(parseFloat(destination.originalPrice))}
                             </span>
                             <span className="text-gold-accent font-bold text-xl">
-                              ${parseFloat(destination.price).toLocaleString()}
+                              {formatPrice(parseFloat(destination.price))}
                             </span>
                           </div>
                         ) : (
                           <span className="text-gold-accent font-bold text-xl">
-                            ${parseFloat(destination.price).toLocaleString()}
+                            {formatPrice(parseFloat(destination.price))}
                           </span>
                         )}
                         <span className="text-xs text-muted-foreground">per person</span>
