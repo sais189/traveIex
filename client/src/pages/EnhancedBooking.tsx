@@ -869,30 +869,11 @@ export default function EnhancedBooking() {
 
   // Calculate total price in selected currency
   const calculateTotal = () => {
-    const basePrice = parseFloat(destination?.price || "0");
-    const classPrice = travelClasses.find(tc => tc.value === travelClass)?.price || 0;
-    const upgradesTotal = selectedUpgrades.reduce((total, upgradeId) => {
-      const upgrade = upgrades.find(u => u.id === upgradeId);
-      return total + (upgrade?.price || 0);
-    }, 0);
-    
-    // Add destination-specific fees
-    let destinationFees = 0;
-    if (destination?.name.toLowerCase().includes('maldives')) {
-      destinationFees += 25; // Marine conservation fee
-    } else if (destination?.name.toLowerCase().includes('tokyo')) {
-      destinationFees += 15; // Tourist tax
-    } else if (destination?.name.toLowerCase().includes('safari') || destination?.name.toLowerCase().includes('kenya') || destination?.name.toLowerCase().includes('serengeti')) {
-      destinationFees += 50; // Conservation levy
-    } else if (destination?.name.toLowerCase().includes('santorini')) {
-      destinationFees += 20; // Tourism tax
-    }
-    
-    const subtotal = (basePrice * guests) + classPrice + upgradesTotal + destinationFees;
-    const couponDiscount = appliedCoupon ? Math.round(subtotal * (appliedCoupon.discount / 100)) : 0;
-    const totalUSD = subtotal - couponDiscount;
-    
-    return convertPrice(totalUSD);
+    const subtotalAmount = calculateSubtotal();
+    const couponDiscount = appliedCoupon ? Math.round(subtotalAmount * (appliedCoupon.discount / 100)) : 0;
+    // Ensure total is never negative and never greater than subtotal (when no coupon applied)
+    const totalAmount = Math.max(subtotalAmount - couponDiscount, 0);
+    return totalAmount;
   };
 
   // Calculate subtotal (before coupon discount) in selected currency
@@ -1644,7 +1625,7 @@ export default function EnhancedBooking() {
                     <div className="flex justify-between items-center border-t pt-3 mt-4">
                       <span className="text-lg font-semibold">Total Amount</span>
                       <span className="text-2xl font-bold text-gold-accent">
-{formatPrice(calculateTotal(), currency)}
+                        {formatPrice(Math.max(calculateTotal(), 0))}
                       </span>
                     </div>
                     

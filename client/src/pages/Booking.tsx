@@ -181,7 +181,7 @@ export default function Booking() {
   
   const subtotal = Math.round((basePrice * classMultiplier) + upgradeTotal + destinationFees);
   const couponDiscount = appliedCoupon ? Math.round(subtotal * (appliedCoupon.discount / 100)) : 0;
-  const totalAmount = subtotal - couponDiscount;
+  const totalAmount = Math.max(subtotal - couponDiscount, 0);
 
   const handleUpgradeChange = (upgradeId: string, checked: boolean) => {
     if (checked) {
@@ -625,7 +625,7 @@ export default function Booking() {
                     <div className="flex justify-between items-center border-t pt-3 mt-4">
                       <span className="text-lg font-semibold">Total Amount</span>
                       <span className="text-2xl font-bold text-gold-accent">
-                        ${totalAmount.toLocaleString()}
+                        ${Math.max(totalAmount, 0).toLocaleString()}
                       </span>
                     </div>
                     
