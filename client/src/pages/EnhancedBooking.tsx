@@ -1214,7 +1214,7 @@ export default function EnhancedBooking() {
                 <CardContent className="space-y-6">
                   <div className="text-center">
                     <div className="text-3xl font-bold text-gold-accent">
-                      ${destination.price}
+                      {formatPrice(parseFloat(destination.price))}
                     </div>
                     <div className="text-sm text-muted-foreground">per person</div>
                   </div>
@@ -1335,7 +1335,7 @@ export default function EnhancedBooking() {
                         <SelectContent>
                           {travelClasses.map((tc) => (
                             <SelectItem key={tc.value} value={tc.value}>
-                              {tc.label} {tc.price > 0 && `(+$${tc.price})`}
+                              {tc.label} {tc.price > 0 && `(+${formatPrice(tc.price)})`}
                             </SelectItem>
                           ))}
                         </SelectContent>
@@ -1358,7 +1358,7 @@ export default function EnhancedBooking() {
                             className="rounded"
                           />
                           <label htmlFor={upgrade.id} className="text-sm flex-1 cursor-pointer">
-                            {upgrade.name} (+${upgrade.price})
+                            {upgrade.name} (+{formatPrice(upgrade.price)})
                           </label>
                         </div>
                       ))}
