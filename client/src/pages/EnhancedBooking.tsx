@@ -876,6 +876,26 @@ export default function EnhancedBooking() {
     return totalAmount;
   };
 
+  // Calculate per-person cost including all fees
+  const calculatePerPersonCost = () => {
+    const basePrice = parseFloat(destination?.price || "0");
+    
+    // Add destination-specific fees per person
+    let perPersonFees = 0;
+    if (destination?.name.toLowerCase().includes('maldives')) {
+      perPersonFees += 25; // Marine conservation fee per person
+    } else if (destination?.name.toLowerCase().includes('tokyo')) {
+      perPersonFees += 15; // Tourist tax per person
+    } else if (destination?.name.toLowerCase().includes('safari') || destination?.name.toLowerCase().includes('kenya') || destination?.name.toLowerCase().includes('serengeti')) {
+      perPersonFees += 50; // Conservation levy per person
+    } else if (destination?.name.toLowerCase().includes('santorini')) {
+      perPersonFees += 20; // Tourism tax per person
+    }
+    
+    const perPersonCostUSD = basePrice + perPersonFees;
+    return convertPrice(perPersonCostUSD);
+  };
+
   // Calculate subtotal (before coupon discount) in selected currency
   const calculateSubtotal = () => {
     const basePrice = parseFloat(destination?.price || "0");
@@ -1214,7 +1234,7 @@ export default function EnhancedBooking() {
                 <CardContent className="space-y-6">
                   <div className="text-center">
                     <div className="text-3xl font-bold text-gold-accent">
-                      {formatPrice(parseFloat(destination.price))}
+                      {formatPrice(calculatePerPersonCost())}
                     </div>
                     <div className="text-sm text-muted-foreground">per person</div>
                   </div>
