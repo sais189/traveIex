@@ -876,7 +876,19 @@ export default function EnhancedBooking() {
       return total + (upgrade?.price || 0);
     }, 0);
     
-    const subtotal = (basePrice * guests) + classPrice + upgradesTotal;
+    // Add destination-specific fees
+    let destinationFees = 0;
+    if (destination?.name.toLowerCase().includes('maldives')) {
+      destinationFees += 25; // Marine conservation fee
+    } else if (destination?.name.toLowerCase().includes('tokyo')) {
+      destinationFees += 15; // Tourist tax
+    } else if (destination?.name.toLowerCase().includes('safari') || destination?.name.toLowerCase().includes('kenya') || destination?.name.toLowerCase().includes('serengeti')) {
+      destinationFees += 50; // Conservation levy
+    } else if (destination?.name.toLowerCase().includes('santorini')) {
+      destinationFees += 20; // Tourism tax
+    }
+    
+    const subtotal = (basePrice * guests) + classPrice + upgradesTotal + destinationFees;
     const couponDiscount = appliedCoupon ? Math.round(subtotal * (appliedCoupon.discount / 100)) : 0;
     const totalUSD = subtotal - couponDiscount;
     
@@ -892,7 +904,19 @@ export default function EnhancedBooking() {
       return total + (upgrade?.price || 0);
     }, 0);
     
-    const subtotalUSD = (basePrice * guests) + classPrice + upgradesTotal;
+    // Add destination-specific fees
+    let destinationFees = 0;
+    if (destination?.name.toLowerCase().includes('maldives')) {
+      destinationFees += 25; // Marine conservation fee
+    } else if (destination?.name.toLowerCase().includes('tokyo')) {
+      destinationFees += 15; // Tourist tax
+    } else if (destination?.name.toLowerCase().includes('safari') || destination?.name.toLowerCase().includes('kenya') || destination?.name.toLowerCase().includes('serengeti')) {
+      destinationFees += 50; // Conservation levy
+    } else if (destination?.name.toLowerCase().includes('santorini')) {
+      destinationFees += 20; // Tourism tax
+    }
+    
+    const subtotalUSD = (basePrice * guests) + classPrice + upgradesTotal + destinationFees;
     return convertPrice(subtotalUSD);
   };
 

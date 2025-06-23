@@ -166,7 +166,20 @@ export default function Booking() {
     const upgrade = upgradeOptions.find(u => u.id === upgradeId);
     return total + (upgrade?.price || 0);
   }, 0);
-  const subtotal = Math.round((basePrice * classMultiplier) + upgradeTotal);
+  
+  // Add destination-specific fees
+  let destinationFees = 0;
+  if (destination.name.toLowerCase().includes('maldives')) {
+    destinationFees += 25; // Marine conservation fee
+  } else if (destination.name.toLowerCase().includes('tokyo')) {
+    destinationFees += 15; // Tourist tax
+  } else if (destination.name.toLowerCase().includes('safari') || destination.name.toLowerCase().includes('kenya')) {
+    destinationFees += 50; // Conservation levy
+  } else if (destination.name.toLowerCase().includes('santorini')) {
+    destinationFees += 20; // Tourism tax
+  }
+  
+  const subtotal = Math.round((basePrice * classMultiplier) + upgradeTotal + destinationFees);
   const couponDiscount = appliedCoupon ? Math.round(subtotal * (appliedCoupon.discount / 100)) : 0;
   const totalAmount = subtotal - couponDiscount;
 
