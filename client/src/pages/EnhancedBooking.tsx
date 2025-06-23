@@ -870,7 +870,7 @@ export default function EnhancedBooking() {
   // Calculate total price in selected currency
   const calculateTotal = () => {
     const subtotalAmount = calculateSubtotal();
-    const couponDiscount = appliedCoupon ? Math.round(subtotalAmount * (appliedCoupon.discount / 100)) : 0;
+    const couponDiscount = appliedCoupon ? (subtotalAmount * (appliedCoupon.discount / 100)) : 0;
     // Ensure total is never negative and never greater than subtotal (when no coupon applied)
     const totalAmount = Math.max(subtotalAmount - couponDiscount, 0);
     return totalAmount;
@@ -1631,7 +1631,7 @@ export default function EnhancedBooking() {
                     {appliedCoupon && (
                       <div className="flex justify-between text-sm text-green-600 dark:text-green-400 font-medium mb-3">
                         <span>Coupon Discount ({appliedCoupon.code} - {appliedCoupon.discount}% off)</span>
-                        <span>-{formatPrice(Math.round(calculateSubtotal() * (appliedCoupon.discount / 100)))}</span>
+                        <span>-{formatPrice(calculateSubtotal() * (appliedCoupon.discount / 100))}</span>
                       </div>
                     )}
                     
@@ -1647,7 +1647,7 @@ export default function EnhancedBooking() {
                     {guests > 1 && (
                       <div className="flex justify-between text-xs text-muted-foreground">
                         <span>Per person</span>
-                        <span>{formatPrice(Math.round(calculateTotal() / guests), currency)}</span>
+                        <span>{formatPrice(calculateTotal() / guests)}</span>
                       </div>
                     )}
                     
@@ -1663,11 +1663,11 @@ export default function EnhancedBooking() {
                       <div className="space-y-1 text-xs text-muted-foreground">
                         <div className="flex justify-between">
                           <span>Deposit required (20%)</span>
-                          <span>{formatPrice(Math.round(calculateTotal() * 0.2), currency)}</span>
+                          <span>{formatPrice(calculateTotal() * 0.2)}</span>
                         </div>
                         <div className="flex justify-between">
                           <span>Balance due before departure</span>
-                          <span>{formatPrice(Math.round(calculateTotal() * 0.8), currency)}</span>
+                          <span>{formatPrice(calculateTotal() * 0.8)}</span>
                         </div>
                         <div className="text-xs text-muted-foreground mt-2">
                           Secure payment processing via Stripe
