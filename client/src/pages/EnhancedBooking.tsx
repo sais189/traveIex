@@ -893,39 +893,21 @@ export default function EnhancedBooking() {
     }
     
     const perPersonCostUSD = basePrice + perPersonFees;
-    console.log('Debug calculatePerPersonCost:', { 
-      basePrice, 
-      perPersonFees, 
-      perPersonCostUSD, 
-      destinationName: destination?.name,
-      convertedPrice: convertPrice(perPersonCostUSD)
-    });
     return convertPrice(perPersonCostUSD);
   };
 
   // Calculate subtotal (before coupon discount) in selected currency
   const calculateSubtotal = () => {
-    const basePrice = parseFloat(destination?.price || "0");
+    const perPersonCost = calculatePerPersonCost();
     const classPrice = travelClasses.find(tc => tc.value === travelClass)?.price || 0;
     const upgradesTotal = selectedUpgrades.reduce((total, upgradeId) => {
       const upgrade = upgrades.find(u => u.id === upgradeId);
       return total + (upgrade?.price || 0);
     }, 0);
     
-    // Add destination-specific fees (per person)
-    let destinationFees = 0;
-    if (destination?.name.toLowerCase().includes('maldives')) {
-      destinationFees += 25 * guests; // Marine conservation fee per person
-    } else if (destination?.name.toLowerCase().includes('tokyo')) {
-      destinationFees += 15 * guests; // Tourist tax per person
-    } else if (destination?.name.toLowerCase().includes('safari') || destination?.name.toLowerCase().includes('kenya') || destination?.name.toLowerCase().includes('serengeti')) {
-      destinationFees += 50 * guests; // Conservation levy per person
-    } else if (destination?.name.toLowerCase().includes('santorini')) {
-      destinationFees += 20 * guests; // Tourism tax per person
-    }
-    
-    const subtotalUSD = (basePrice * guests) + classPrice + upgradesTotal + destinationFees;
-    return convertPrice(subtotalUSD);
+    // Calculate subtotal using consistent per-person pricing
+    const subtotalAmount = (perPersonCost * guests) + convertPrice(classPrice) + convertPrice(upgradesTotal);
+    return subtotalAmount;
   };
 
   const toggleUpgrade = (upgradeId: string) => {
@@ -1454,8 +1436,8 @@ export default function EnhancedBooking() {
                     
                     {/* Base Price */}
                     <div className="flex justify-between text-sm mb-3">
-                      <span>Base price ({formatPrice(parseFloat(destination?.price || "0"))} × {guests} guest{guests > 1 ? 's' : ''})</span>
-                      <span>{formatPrice(parseFloat(destination?.price || "0") * guests)}</span>
+                      <span>Base price ({formatPrice(calculatePerPersonCost())} × {guests} guest{guests > 1 ? 's' : ''})</span>
+                      <span>{formatPrice(calculatePerPersonCost() * guests)}</span>
                     </div>
                     
                     {/* Travel Class Premium */}

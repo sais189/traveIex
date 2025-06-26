@@ -1,4 +1,4 @@
-# Globetrotter Travel Booking Application
+# Travelex Travel Booking Application
 
 ## Overview
 

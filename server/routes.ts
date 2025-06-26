@@ -1,3 +1,4 @@
+dotenv.config()
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { setupAuth, isAuthenticated } from "./auth";
@@ -5,6 +6,7 @@ import { storage } from "./storage";
 import { insertDestinationSchema, insertBookingSchema } from "@shared/schema";
 import { z } from "zod";
 import Stripe from "stripe";
+import dotenv from "dotenv";
 
 // Intelligent chatbot response generator using rule-based approach
 async function generateChatbotResponse(message: string, data: any): Promise<string> {
